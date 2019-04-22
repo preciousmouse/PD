@@ -47,7 +47,7 @@ export default class Details extends React.Component{
 			<div className='tip-wrapper'>
 				<div className='tip-content' onClick={this.upload}>
 					<table><tbody>
-						<tr><td className='tip-title'>点击选择图片或拖拽图片到这里</td></tr>
+						<tr><td className='tip-title'>点击选择图片或拖拽图片到这里开始预测</td></tr>
 						<tr><td className='tip-footer'>JPG JPEG PNG 5MB</td></tr>
 					</tbody></table>
 				</div>

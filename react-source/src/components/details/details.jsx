@@ -42,7 +42,7 @@ export default class Details extends React.Component{
 			<div className='tip-wrapper'>
 				<div className='tip-content' onClick={this.upload}>
 					<table><tbody>
-						<tr><td className='tip-title'>点击选择图片或拖拽图片到这里</td></tr>
+						<tr><td className='tip-title'>点击选择图片或拖拽图片到这里开始预测</td></tr>
 						<tr><td className='tip-footer'>JPG JPEG PNG 5MB</td></tr>
 					</tbody></table>
 				</div>
@@ -108,9 +108,8 @@ export default class Details extends React.Component{
 				</div> */}
 				<div className='card-wrap'>
 					<Card title='肿瘤细胞分割分类指标' bordered={false} style={{width:250,boxShadow: '5px 5px 5px #ddd'}}>
-						<p>总体像素精度： 90.07%</p>
-						<p>计数误差（平均）: {'<5%'}</p>
-						<p>TPS误差（平均）：{'<10%'}</p>
+						<p>总体像素精度： {'90.07%'}</p>
+						<p>计数误差: {'5.27%'}</p>
 					</Card>
 					<Card title='肿瘤细胞细胞计数' bordered={false} style={{width:250,boxShadow: '5px 5px 5px #ddd'}}>
 						<p>阳性细胞数量： {posTumorsCount}</p>

@@ -7,7 +7,7 @@
 
 import React from 'React';
 import ReactDom from 'react-dom';
-import {Icon, message, Progress, Switch,} from 'antd';
+import {Icon, message, Progress, Switch, Tooltip, Select, } from 'antd';
 import $ from 'jquery';
 import uuid from 'uuid';
 
@@ -103,22 +103,43 @@ export default class Pageside extends React.Component{
 		this.trainSuccess();
 	}
 
+	handleChange = (value,option)=>{
+		console.log(`selected ${value}`,option);
+		this.trainModel();
+		this.props.typeChange(value);
+	}
+
     render(){
 		const percentList = [0,100,50];
 		const statusList = ['active','success','exception'];
 		return (
 			<div className='page-side'>
 				<div className='header-wrapper'>
-					<div className='wrapper-right' onClick={this.emptyList}><Icon type="delete" /></div>
-					<div className='wrapper-right' onClick={this.upload}><Icon type="cloud-upload" /></div>
-					<div className='wrapper-right' onClick={this.getList}><Icon type="reload" /></div>
-					<div className='wrapper-right' onClick={this.trainModel}>
-						{/* <Icon type="plus" /> */}
-						<Switch checkedChildren="1" unCheckedChildren="0" onChange={(checked)=>{this.props.typeChange(checked)}}/>
-					</div>
+					<Tooltip title={"清空列表"}>
+						<div className='wrapper-right' onClick={this.emptyList}><Icon type="delete" /></div></Tooltip>
+					<Tooltip title={"上传图片"}>
+						<div className='wrapper-right' onClick={this.upload}><Icon type="cloud-upload" /></div></Tooltip>
+					<Tooltip title={"刷新列表"}>	
+						<div className='wrapper-right' onClick={this.getList}><Icon type="reload" /></div></Tooltip>
+					{/* <div className='wrapper-right' onClick={this.trainModel}>
+						<Switch checkedChildren="1" unCheckedChildren="0" onChange={(checked)=>{this.props.typeChange(checked)}}/> 
+					</div>*/}
 					<div className='wrapper-main'>
 						<div className='wrapper-main-content'>Mnist Demo</div>
 					</div>
+				</div>
+				<div className='model-wrapper'>
+					<span className="text">正在使用：</span>
+					<Select showSearch
+							style={{ width: 150 }}
+							placeholder="Select a model"
+							optionFilterProp="children"
+							defaultValue={0}
+							onChange={this.handleChange}
+							filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+						<Select.Option value={0}>完善模型</Select.Option>
+						<Select.Option value={1}>新训练模型1</Select.Option>
+					</Select>
 				</div>
 				<div className='content-wrapper'>
 					{this.state.lists.map((ele,index)=>{

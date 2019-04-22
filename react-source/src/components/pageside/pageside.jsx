@@ -7,7 +7,7 @@
 
 import React from 'React';
 import ReactDom from 'react-dom';
-import {Icon, message, Progress,} from 'antd';
+import {Icon, message, Progress, Tooltip, Select, } from 'antd';
 import $ from 'jquery';
 import uuid from 'uuid';
 
@@ -18,20 +18,20 @@ export default class Pageside extends React.Component{
 		super(prop);
 		this.state = {
 			lists: [],
-			focus: -1
+			focus: -1,
 		};
 	}
 	componentDidMount(){
 		this.getList();
 	}
 
-	success = () => {
+	emptySuccess = () => {
 		message.loading('正在清空列表...', 1)
 		  .then(() => message.success('清空列表成功', 1))
 	};
 
 	emptyList = ()=>{
-		this.success();
+		this.emptySuccess();
 		// const hide = message.loading('正在清空列表...', 0 ,()=>{
 		// 	message.success('清空列表成功');
 		// });
@@ -113,10 +113,18 @@ export default class Pageside extends React.Component{
 
 	trainSuccess = ()=>{
 		message.loading('正在加载训练模型...', 1)
-		  .then(() => message.success('加载新模型成功', 1))
+		  .then(() => message.success('加载模型成功', 1))
 	}
 	trainModel = ()=>{
+		//train
+		this.resetFocus();
 		this.trainSuccess();
+	}
+
+	handleChange = (value,option)=>{
+		console.log(`selected ${value}`,option);
+		this.trainModel();
+		//this.props.typeChange(value);
 	}
 
     render(){
@@ -131,13 +139,29 @@ export default class Pageside extends React.Component{
 		return (
 			<div className='page-side'>
 				<div className='header-wrapper'>
-					<div className='wrapper-right' onClick={this.emptyList}><Icon type="delete" /></div>
-					<div className='wrapper-right' onClick={this.upload}><Icon type="cloud-upload" /></div>
-					<div className='wrapper-right' onClick={this.getList}><Icon type="reload" /></div>
-					<div className='wrapper-right' onClick={this.trainModel}><Icon type="plus" /></div>
+					<Tooltip title={"清空列表"}>
+						<div className='wrapper-right' onClick={this.emptyList}><Icon type="delete" /></div></Tooltip>
+					<Tooltip title={"上传图片"}>
+						<div className='wrapper-right' onClick={this.upload}><Icon type="cloud-upload" /></div></Tooltip>
+					<Tooltip title={"刷新列表"}>	
+						<div className='wrapper-right' onClick={this.getList}><Icon type="reload" /></div></Tooltip>
+					{/* <div className='wrapper-right' onClick={this.trainModel}><Icon type="plus" /></div> */}
 					<div className='wrapper-main'>
 						<div className='wrapper-main-content'>Deep learning</div>
 					</div>
+				</div>
+				<div className='model-wrapper'>
+					<span className="text">正在使用：</span>
+					<Select showSearch
+							style={{ width: 150 }}
+							placeholder="Select a model"
+							optionFilterProp="children"
+							defaultValue={0}
+							onChange={this.handleChange}
+							filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+						<Select.Option value={0}>完善模型</Select.Option>
+						<Select.Option value={1}>新训练模型1</Select.Option>
+					</Select>
 				</div>
 				<div className='content-wrapper'>
 					{this.state.lists.map((ele,index)=>{
