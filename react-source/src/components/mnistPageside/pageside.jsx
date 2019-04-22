@@ -137,8 +137,8 @@ export default class Pageside extends React.Component{
 							defaultValue={0}
 							onChange={this.handleChange}
 							filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
-						<Select.Option value={0}>完善模型</Select.Option>
-						<Select.Option value={1}>新训练模型1</Select.Option>
+						<Select.Option value={0}>已训练模型</Select.Option>
+						<Select.Option value={1}>重新训练模型1</Select.Option>
 					</Select>
 				</div>
 				<div className='content-wrapper'>
